@@ -5,6 +5,8 @@
 #include "tiny_obj_loader.h"
 
 #include "Image.h"
+#include "triangle.h"
+#include "boundingBox.h"
 
 // This allows you to skip the `std::` in front of C++ standard library
 // functions. You can also say `using std::cout` to be more selective.
@@ -23,8 +25,8 @@ double RANDOM_COLORS[7][3] = {
 
 int main(int argc, char **argv)
 {
-	if(argc < 2) {
-		cout << "Usage: A1 meshfile" << endl;
+	if(argc < 5) {
+		cout << "Usage: ./A1 meshfile imgfile width height tasknumber" << endl;
 		return 0;
 	}
 	string meshName(argv[1]);
@@ -81,6 +83,38 @@ int main(int argc, char **argv)
 		}
 	}
 	cout << "Number of vertices: " << posBuf.size()/3 << endl;
-	
+    
+    //organize posBuf
+    vector<Vertex> vertices = toVertices(posBuf);
+    vector<Triangle> triangles = toTriangles(vertices);
+    
+    switch (taskNum) {
+        //Task 1: Drawing Bounding Boxes
+        case 1:
+        {
+            vector<float> color;
+            for(int i=0; i<triangles.size(); i++){
+                color[0] = RANDOM_COLORS[i%7][0]*255;   //r
+                color[1] = RANDOM_COLORS[i%7][0]*255;   //g
+                color[2] = RANDOM_COLORS[i%7][0]*255;   //b
+                drawBox(triangles[i], color, image);
+            }
+            
+        }
+            break;
+        case 2:
+        {
+            
+        }
+            break;
+            
+            
+        default:
+        {
+            cout << "Task Not Found" << endl;
+        }
+            break;
+    }
+    
 	return 0;
 }
