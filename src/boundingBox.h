@@ -33,6 +33,8 @@ vector<float> findBounds(vector<Vertex>& vertices){
     return {xMin,xMax,yMin,yMax};
 }
 
+
+
 void scaleTranslate(int& width, int& height, vector<float>& bounds, vector<Triangle>& triangles){
     //SCALE
     float dXo = bounds[1]-bounds[0];  //xMax - xMin : of obj

@@ -17,8 +17,8 @@ void drawBox(Triangle& t, float (&color)[3], std::shared_ptr<Image>& image){
     int yMax = std::max({t.a.y,t.b.y,t.c.y});
     
     //drawing
-    for(int y = yMin; y < yMax; ++y) {
-        for(int x = xMin; x < xMax; ++x) {
+    for(int y = yMin; y <= yMax; ++y) {
+        for(int x = xMin; x <= xMax; ++x) {
             image->setPixel(x, y, color[0], color[1], color[2]);
         }
     }
@@ -34,8 +34,8 @@ void drawTriangle(Triangle& t, float (&color)[3], std::shared_ptr<Image>& image)
     
     //drawing
     Vertex v;
-    for(int y = yMin; y < yMax; ++y) {
-        for(int x = xMin; x < xMax; ++x) {
+    for(int y = yMin; y <= yMax; ++y) {
+        for(int x = xMin; x <= xMax; ++x) {
             v.x = x; v.y = y;
             //std::cout<<"p: " <<v.x << " " << v.y << std::endl;
             if(isInside(t.a, t.b, t.c, v)){
@@ -55,11 +55,11 @@ void drawPerVertexTriangle(Triangle& t, std::shared_ptr<Image>& image){
     
     //drawing
     Vertex v;
-    for(int y = yMin; y < yMax; ++y) {
-        for(int x = xMin; x < xMax; ++x) {
+    for(int y = yMin; y <= yMax; ++y) {
+        for(int x = xMin; x <= xMax; ++x) {
             v.x = x; v.y = y;
             if(isInside(t.a, t.b, t.c, v)){
-                vector<unsigned char> color = colorWeight(t.a, t.b, t.c, v);
+                vector<unsigned char> color = colorWeight(t.a, t.b, t.c, v);    //color interpolation
                 image->setPixel(x, y, color[0], color[1], color[2]);
             }
         }
