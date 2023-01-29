@@ -11,7 +11,7 @@
 #include <algorithm>
 #include "Image.h"
 
-vector<float> findBounds(vector<Vertex> vertices){
+vector<float> findBounds(vector<Vertex>& vertices){
     float xMin = vertices[0].x;
     float xMax = vertices[0].x;
     float yMin = vertices[0].y;
@@ -33,16 +33,35 @@ vector<float> findBounds(vector<Vertex> vertices){
     return {xMin,xMax,yMin,yMax};
 }
 
-void drawBox(Triangle t, vector<float> color, std::shared_ptr<Image> image){
-    int xMin = std::min({t.a.x,t.b.x,t.c.x});
-    int xMax = std::max({t.a.x,t.b.x,t.c.x});
-    int yMin = std::min({t.a.y,t.b.y,t.c.y});
-    int yMax = std::max({t.a.y,t.b.y,t.c.y});
-    for(int y = yMin; y <= yMax; ++y) {
-        for(int x = xMin; x <= xMax; ++x) {
-            image->setPixel(x, y, color[0], color[1], color[2]);
-        }
+void scaleTranslate(int& width, int& height, vector<float>& bounds, vector<Triangle>& triangles){
+    //SCALE
+    float dXo = bounds[1]-bounds[0];  //xMax - xMin : of obj
+    float dYo = bounds[3]-bounds[2];  //yMax - yMin : of obj
+    float xScale = width/dXo;
+    float yScale = height/dYo;
+    float scale = std::min(xScale, yScale); //find if height or length is limiting
+    
+    //TRANSLATION
+    //middle of image
+    int midX = width/2;
+    int midY = height/2;
+    int midObjX = scale * ((bounds[1]+bounds[0])/2);  //s * (1/2)(Xmax + Xmin)
+    int midObjY = scale * ((bounds[3]+bounds[2])/2);  //s * (1/2)(Ymax + Ymin)
+    int transX = midX - midObjX;
+    int transY = midY - midObjY;
+    
+    //scale and translate triangles
+    for(auto& tri : triangles){
+        tri.a.x = scale * tri.a.x + transX;
+        tri.a.y = scale * tri.a.y + transY;
+        tri.b.x = scale * tri.b.x + transX;
+        tri.b.y = scale * tri.b.y + transY;
+        tri.c.x = scale * tri.c.x + transX;
+        tri.c.y = scale * tri.c.y + transY;
+        //std::cout << "new: " << tri.b.x << std::endl;
     }
+    
 }
+
 
 #endif /* boundingBox_h */

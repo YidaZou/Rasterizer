@@ -35,7 +35,7 @@ bool isInside(Vertex& v1, Vertex& v2, Vertex& v3, Vertex& v){
    float area2 = triangleArea(v1, v, v3);  //area of AvC
    float area3 = triangleArea(v1, v2, v);  //area of ABv
 
-   return (area == area1 + area2 + area3);  //is inside if areas add up
+   return (abs(area - (area1 + area2 + area3)) < 0.01);  //is inside if areas add up
 }
 
 vector<unsigned char> colorWeight(Vertex& v1, Vertex& v2, Vertex& v3, Vertex& v){
@@ -54,7 +54,7 @@ vector<unsigned char> colorWeight(Vertex& v1, Vertex& v2, Vertex& v3, Vertex& v)
 
 vector<Vertex> toVertices(vector<float>& posBuf){
     vector<Vertex> vertices;
-    for(int i=0; i<posBuf.size()-2; i++){
+    for(int i=0; i<posBuf.size()-2; i+=3){
         Vertex v;
         v.x = posBuf[i];
         v.y = posBuf[i+1];
@@ -66,12 +66,13 @@ vector<Vertex> toVertices(vector<float>& posBuf){
 
 vector<Triangle> toTriangles(vector<Vertex>& vertices){
     vector<Triangle> triangles;
-    for(int i=0; i<vertices.size()-2; i++){
+    for(int i=0; i<vertices.size()-2; i+=3){
         Triangle t;
         t.a = vertices[i];
         t.b = vertices[i+1];
         t.c = vertices[i+2];
         triangles.push_back(t);
+        //std::cout << i << ": " << t.a.x << t.b.x << t.c.x << std::endl;
     }
     return triangles;
 }

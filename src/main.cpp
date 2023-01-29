@@ -7,6 +7,7 @@
 #include "Image.h"
 #include "triangle.h"
 #include "boundingBox.h"
+#include "drawing.h"
 
 // This allows you to skip the `std::` in front of C++ standard library
 // functions. You can also say `using std::cout` to be more selective.
@@ -88,26 +89,62 @@ int main(int argc, char **argv)
     vector<Vertex> vertices = toVertices(posBuf);
     vector<Triangle> triangles = toTriangles(vertices);
     
+    //calculate bounds of whole image
+    vector<float> bounds = findBounds(vertices);
+    
+    //scale and translate
+    scaleTranslate(width, height, bounds, triangles);
+    
     switch (taskNum) {
         //Task 1: Drawing Bounding Boxes
         case 1:
         {
-            vector<float> color;
+            float color[3];
             for(int i=0; i<triangles.size(); i++){
                 color[0] = RANDOM_COLORS[i%7][0]*255;   //r
-                color[1] = RANDOM_COLORS[i%7][0]*255;   //g
-                color[2] = RANDOM_COLORS[i%7][0]*255;   //b
+                color[1] = RANDOM_COLORS[i%7][1]*255;   //g
+                color[2] = RANDOM_COLORS[i%7][2]*255;   //b
                 drawBox(triangles[i], color, image);
             }
             
         }
             break;
+        //Task 2: Drawing Triangles
         case 2:
         {
-            
+            float color[3];
+            for(int i=0; i<triangles.size(); i++){
+                color[0] = RANDOM_COLORS[i%7][0]*255;   //r
+                color[1] = RANDOM_COLORS[i%7][1]*255;   //g
+                color[2] = RANDOM_COLORS[i%7][2]*255;   //b
+                drawTriangle(triangles[i], color, image);
+            }
         }
             break;
-            
+        //Task 3: interpolating Per-Vertex Colors
+        case 3:
+        {
+            float color[3];
+            for(int i=0; i<triangles.size(); i++){
+                //assign colors to vertices of triangle
+                //a
+                triangles[i].a.r = RANDOM_COLORS[i%7][0]*255;   //r
+                triangles[i].a.g = RANDOM_COLORS[i%7][1]*255;   //g
+                triangles[i].a.b = RANDOM_COLORS[i%7][2]*255;   //b
+                //b
+                triangles[i].b.r = RANDOM_COLORS[(i+1)%7][0]*255;   //r
+                triangles[i].b.g = RANDOM_COLORS[(i+1)%7][1]*255;   //g
+                triangles[i].b.b = RANDOM_COLORS[(i+1)%7][2]*255;   //b
+                //c
+                triangles[i].c.r = RANDOM_COLORS[(i+2)%7][0]*255;   //r
+                triangles[i].c.g = RANDOM_COLORS[(i+2)%7][1]*255;   //g
+                triangles[i].c.b = RANDOM_COLORS[(i+2)%7][2]*255;   //b
+                
+                drawPerVertexTriangle(triangles[i], image);
+            }
+        }
+            break;
+        
             
         default:
         {
@@ -115,6 +152,6 @@ int main(int argc, char **argv)
         }
             break;
     }
-    
+    image->writeToFile(imgName);
 	return 0;
 }

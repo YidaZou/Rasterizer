@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "38B23287E2A649D5AAC3B990"
-               BuildableName = "A1"
-               BlueprintName = "Rasterizer"
-               ReferencedContainer = "container:build/Rasterizer.xcodeproj">
+               BuildableName = "Rasterizer"
+               BlueprintName = "A1"
+               ReferencedContainer = "container:build/A1.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,14 +45,14 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "38B23287E2A649D5AAC3B990"
-            BuildableName = "A1"
-            BlueprintName = "Rasterizer"
-            ReferencedContainer = "container:build/Rasterizer.xcodeproj">
+            BuildableName = "Rasterizer"
+            BlueprintName = "A1"
+            ReferencedContainer = "container:build/A1.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "../../resources/bunny.obj"
+            argument = "../../resources/teapot.obj"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -84,9 +84,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "38B23287E2A649D5AAC3B990"
-            BuildableName = "A1"
-            BlueprintName = "Rasterizer"
-            ReferencedContainer = "container:build/Rasterizer.xcodeproj">
+            BuildableName = "Rasterizer"
+            BlueprintName = "A1"
+            ReferencedContainer = "container:build/A1.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

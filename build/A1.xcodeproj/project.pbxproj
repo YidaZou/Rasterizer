@@ -63,12 +63,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		01766D99605A4ECF9078277D /* Rasterizer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = Rasterizer; sourceTree = BUILT_PRODUCTS_DIR; };
+		01766D99605A4ECF9078277D /* A1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = A1; sourceTree = BUILT_PRODUCTS_DIR; };
 		08F8098FD5494729952D1D8D /* Image.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = Image.h; path = src/Image.h; sourceTree = SOURCE_ROOT; };
 		4C1F2F53DC9A4EE4B9CE9B6B /* tiny_obj_loader.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = tiny_obj_loader.h; path = src/tiny_obj_loader.h; sourceTree = SOURCE_ROOT; };
 		5D608BC155304F6CAAF7BF4D /* main.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
 		6FC2D4C429830B9C00998B36 /* triangle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = triangle.h; path = src/triangle.h; sourceTree = "<group>"; };
 		6FC2D4C9298319E400998B36 /* boundingBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = boundingBox.h; path = src/boundingBox.h; sourceTree = "<group>"; };
+		6FC2D4CB2983282700998B36 /* drawing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = drawing.h; path = src/drawing.h; sourceTree = "<group>"; };
 		85B47BC973C2441EB71D268A /* CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
 		A989537F87584DC69CD05DD4 /* Image.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = Image.cpp; path = src/Image.cpp; sourceTree = SOURCE_ROOT; };
 		B3144F6778314482AEC2EC93 /* stb_image_write.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = stb_image_write.h; path = src/stb_image_write.h; sourceTree = SOURCE_ROOT; };
@@ -126,6 +127,7 @@
 				08F8098FD5494729952D1D8D /* Image.h */,
 				B3144F6778314482AEC2EC93 /* stb_image_write.h */,
 				4C1F2F53DC9A4EE4B9CE9B6B /* tiny_obj_loader.h */,
+				6FC2D4CB2983282700998B36 /* drawing.h */,
 				6FC2D4C9298319E400998B36 /* boundingBox.h */,
 			);
 			name = "Header Files";
@@ -134,7 +136,7 @@
 		9FFD3ED6857846BAA9AE3812 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				01766D99605A4ECF9078277D /* Rasterizer */,
+				01766D99605A4ECF9078277D /* A1 */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -161,9 +163,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		38B23287E2A649D5AAC3B990 /* Rasterizer */ = {
+		38B23287E2A649D5AAC3B990 /* A1 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5494301E584A43DFB71D29B2 /* Build configuration list for PBXNativeTarget "Rasterizer" */;
+			buildConfigurationList = 5494301E584A43DFB71D29B2 /* Build configuration list for PBXNativeTarget "A1" */;
 			buildPhases = (
 				AB7156E108534A8B959ADFC9 /* Sources */,
 				8C720E4758A44982B6EA5E8D /* Frameworks */,
@@ -173,9 +175,9 @@
 			dependencies = (
 				462D941FBDBB4FDDA0CA9A8F /* PBXTargetDependency */,
 			);
-			name = Rasterizer;
+			name = A1;
 			productName = A1;
-			productReference = 01766D99605A4ECF9078277D /* Rasterizer */;
+			productReference = 01766D99605A4ECF9078277D /* A1 */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -186,7 +188,7 @@
 			attributes = {
 				LastUpgradeCheck = 1340;
 			};
-			buildConfigurationList = 839AF5A8F7AC4FE69E27A297 /* Build configuration list for PBXProject "Rasterizer" */;
+			buildConfigurationList = 839AF5A8F7AC4FE69E27A297 /* Build configuration list for PBXProject "A1" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -199,7 +201,7 @@
 			projectRoot = "";
 			targets = (
 				FA88317853594F2CA170BF27 /* ALL_BUILD */,
-				38B23287E2A649D5AAC3B990 /* Rasterizer */,
+				38B23287E2A649D5AAC3B990 /* A1 */,
 				B92493C557EF403D9BBF25C7 /* ZERO_CHECK */,
 			);
 		};
@@ -262,7 +264,7 @@
 		};
 		AAAF85AF3B7B4BE1A5C15B54 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 38B23287E2A649D5AAC3B990 /* Rasterizer */;
+			target = 38B23287E2A649D5AAC3B990 /* A1 */;
 			targetProxy = 79E67B90C7934D6F80786B87 /* PBXContainerItemProxy */;
 		};
 		CF71B6DAB1A44FB3A6F5348B /* PBXTargetDependency */ = {
@@ -327,7 +329,7 @@
 					"$(inherited)",
 				);
 				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Rasterizer;
+				PRODUCT_NAME = A1;
 				SECTORDER_FLAGS = "";
 				SYMROOT = /Users/young/CSCE441/A1/build;
 				USE_HEADERMAP = NO;
@@ -364,7 +366,7 @@
 					"$(inherited)",
 				);
 				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Rasterizer;
+				PRODUCT_NAME = A1;
 				SECTORDER_FLAGS = "";
 				SYMROOT = /Users/young/CSCE441/A1/build;
 				USE_HEADERMAP = NO;
@@ -536,7 +538,7 @@
 					"$(inherited)",
 				);
 				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Rasterizer;
+				PRODUCT_NAME = A1;
 				SECTORDER_FLAGS = "";
 				SYMROOT = /Users/young/CSCE441/A1/build;
 				USE_HEADERMAP = NO;
@@ -627,7 +629,7 @@
 					"$(inherited)",
 				);
 				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = Rasterizer;
+				PRODUCT_NAME = A1;
 				SECTORDER_FLAGS = "";
 				SYMROOT = /Users/young/CSCE441/A1/build;
 				USE_HEADERMAP = NO;
@@ -674,7 +676,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		5494301E584A43DFB71D29B2 /* Build configuration list for PBXNativeTarget "Rasterizer" */ = {
+		5494301E584A43DFB71D29B2 /* Build configuration list for PBXNativeTarget "A1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E51C304C0CDD4CF2AA2AA0CC /* Debug */,
@@ -685,7 +687,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		839AF5A8F7AC4FE69E27A297 /* Build configuration list for PBXProject "Rasterizer" */ = {
+		839AF5A8F7AC4FE69E27A297 /* Build configuration list for PBXProject "A1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C3C656B5861E4E2FB001ECD8 /* Debug */,
