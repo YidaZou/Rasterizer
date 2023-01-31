@@ -62,7 +62,11 @@ void scaleTranslate(int& width, int& height, vector<float>& bounds, vector<Trian
         tri.c.y = scale * tri.c.y + transY;
         //std::cout << "new: " << tri.b.x << std::endl;
     }
-    
+    //scale and translate bounds of object for later
+    bounds[0] = scale * bounds[0] + transX; //xMin
+    bounds[1] = scale * bounds[1] + transX; //xMax
+    bounds[2] = scale * bounds[2] + transY; //yMin
+    bounds[3] = scale * bounds[3] + transY; //yMax
 }
 
 

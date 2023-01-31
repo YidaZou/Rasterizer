@@ -9,7 +9,7 @@
 #define drawing_h
 
 //draw bounding boxes
-void drawBox(Triangle& t, float (&color)[3], std::shared_ptr<Image>& image){
+void drawBox(Triangle& t, int (&color)[3], std::shared_ptr<Image>& image){
     //bounds of triangle
     int xMin = std::min({t.a.x,t.b.x,t.c.x});
     int xMax = std::max({t.a.x,t.b.x,t.c.x});
@@ -25,7 +25,7 @@ void drawBox(Triangle& t, float (&color)[3], std::shared_ptr<Image>& image){
 }
 
 //draw triangles
-void drawTriangle(Triangle& t, float (&color)[3], std::shared_ptr<Image>& image){
+void drawTriangle(Triangle& t, int (&color)[3], std::shared_ptr<Image>& image){
     //bounds of triangle
     int xMin = std::min({t.a.x,t.b.x,t.c.x});
     int xMax = std::max({t.a.x,t.b.x,t.c.x});
@@ -61,6 +61,28 @@ void drawPerVertexTriangle(Triangle& t, std::shared_ptr<Image>& image){
             if(isInside(t.a, t.b, t.c, v)){
                 vector<unsigned char> color = colorWeight(t.a, t.b, t.c, v);    //color interpolation
                 image->setPixel(x, y, color[0], color[1], color[2]);
+            }
+        }
+    }
+}
+
+void drawVerticalColor(Triangle& t, vector<float>& bounds, std::shared_ptr<Image>& image){
+    //bounds of triangle
+    int xMin = std::min({t.a.x,t.b.x,t.c.x});
+    int xMax = std::max({t.a.x,t.b.x,t.c.x});
+    int yMin = std::min({t.a.y,t.b.y,t.c.y});
+    int yMax = std::max({t.a.y,t.b.y,t.c.y});
+    
+    //drawing
+    Vertex v;
+    for(int y = yMin; y <= yMax; ++y) {
+        for(int x = xMin; x <= xMax; ++x) {
+            v.x = x; v.y = y;
+            if(isInside(t.a, t.b, t.c, v)){
+                float yRelative = y - bounds[2];
+                float objHeight = bounds[3]-bounds[2];
+                float colorRatio = (objHeight - yRelative)/ objHeight;
+                image->setPixel(x, y, 255*(1-colorRatio), 0, 255*colorRatio);
             }
         }
     }

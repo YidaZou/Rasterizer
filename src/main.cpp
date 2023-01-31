@@ -89,17 +89,19 @@ int main(int argc, char **argv)
     vector<Vertex> vertices = toVertices(posBuf);
     vector<Triangle> triangles = toTriangles(vertices);
     
-    //calculate bounds of whole image
-    vector<float> bounds = findBounds(vertices);
+    //calculate bounds of whole object
+    vector<float> bounds = findBounds(vertices);    //{xMin,xMax,yMin,yMax}
     
     //scale and translate
+    cout << bounds[0] << endl;
     scaleTranslate(width, height, bounds, triangles);
+    cout << bounds[0] << endl;
     
     switch (taskNum) {
         //Task 1: Drawing Bounding Boxes
         case 1:
         {
-            float color[3];
+            int color[3];
             for(int i=0; i<triangles.size(); i++){
                 color[0] = RANDOM_COLORS[i%7][0]*255;   //r
                 color[1] = RANDOM_COLORS[i%7][1]*255;   //g
@@ -112,7 +114,7 @@ int main(int argc, char **argv)
         //Task 2: Drawing Triangles
         case 2:
         {
-            float color[3];
+            int color[3];
             for(int i=0; i<triangles.size(); i++){
                 color[0] = RANDOM_COLORS[i%7][0]*255;   //r
                 color[1] = RANDOM_COLORS[i%7][1]*255;   //g
@@ -146,10 +148,8 @@ int main(int argc, char **argv)
         //Task 4: Vertical Color
         case 4:
         {
-            float color[3] = {255,0,0};
             for(int i=0; i<triangles.size(); i++){
-                
-                drawTriangle(triangles[i], color, image);
+                drawVerticalColor(triangles[i], bounds, image);
             }
         }
             break;
