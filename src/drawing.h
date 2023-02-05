@@ -89,6 +89,46 @@ void drawVerticalColor(Triangle& t, vector<float>& bounds, std::shared_ptr<Image
     }
 }
 
+//create points to add to zBuffer and color accordingly
+void createZColoredZBuffer(Triangle& t, vector<float>& bounds, vector<Vertex>& zBuffer){
+    //bounds of triangle
+    int xMin = std::min({t.a.x,t.b.x,t.c.x});
+    int xMax = std::max({t.a.x,t.b.x,t.c.x});
+    int yMin = std::min({t.a.y,t.b.y,t.c.y});
+    int yMax = std::max({t.a.y,t.b.y,t.c.y});
+    float zHeight = bounds[5] - bounds[4];  //zMax-zMin
+    
+    //drawing
+    Vertex v;
+    for(int y = yMin; y <= yMax; ++y) {
+        for(int x = xMin; x <= xMax; ++x) {
+            v.x = x; v.y = y;
+            if(isInside(t.a, t.b, t.c, v)){
+                //z still uses unscaled and untransformed values
+                v.z = zWeight(t.a, t.b, t.c, v); //interpolate z value
+                float zRelative = v.z - bounds[4]; //z-zMin
+                float zRatio = zRelative / zHeight;
+                
+                v.r = 255*zRatio;
+                v.g = 0; v.b = 0;
+                zBuffer.push_back(v);
+            }
+        }
+    }
+}
+
+//sort z buffer from farthest to closest
+bool sortZBuffer(const Vertex& a, const Vertex& b){
+    return a.z < b.z;
+}
+
+//draw from sorted zBuffer
+void drawZBuffer(vector<Vertex>& zBuffer, vector<float>& bounds, std::shared_ptr<Image>& image){
+    for(auto p : zBuffer){
+        image->setPixel(p.x, p.y, p.r, p.g, p.b);
+    }
+}
+
 //create points to add to zBuffer
 void createZBuffer(Triangle& t, vector<float>& bounds, vector<Vertex>& zBuffer){
     //bounds of triangle
@@ -103,29 +143,13 @@ void createZBuffer(Triangle& t, vector<float>& bounds, vector<Vertex>& zBuffer){
         for(int x = xMin; x <= xMax; ++x) {
             v.x = x; v.y = y;
             if(isInside(t.a, t.b, t.c, v)){
-                //z still uses unscaled and untransformed values
+                vector<unsigned char> color = colorWeight(t.a, t.b, t.c, v);    //color interpolation
+                v.r = color[0]; v.g = color[1]; v.b = color[2];
                 v.z = zWeight(t.a, t.b, t.c, v); //interpolate z value
                 zBuffer.push_back(v);
             }
         }
     }
-}
-
-//sort z buffer from farthest to closest
-bool sortZBuffer(const Vertex& a, const Vertex& b){
-    return a.z < b.z;
-}
-
-//draw from sorted zBuffer
-void drawZBuffer(vector<Vertex>& zBuffer, vector<float>& bounds, std::shared_ptr<Image>& image){
-    float zHeight = bounds[5] - bounds[4];  //zMax-zMin
-    for(auto p : zBuffer){
-        float zRelative = p.z - bounds[4]; //z-zMin
-        float zRatio = zRelative / zHeight;
-        image->setPixel(p.x, p.y, 255*zRatio, 0, 0);
-    }
-    //std::cout<<"zMAX: "<< bounds[5] <<" zMIN: " << bounds[4] << std::endl;
-    
 }
 
 #endif /* drawing_h */

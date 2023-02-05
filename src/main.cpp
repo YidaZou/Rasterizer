@@ -88,7 +88,7 @@ int main(int argc, char **argv)
     //organize posBuf
     vector<Vertex> vertices = toVertices(posBuf);
     
-    //add normals to vertices and set normal rgb values for each vertex
+    //add normals to vertices and set normal as default rgb values for each vertex
     normals(vertices,norBuf);
     normalsColor(vertices,norBuf);
     
@@ -162,7 +162,7 @@ int main(int argc, char **argv)
         {
             vector<Vertex> zBuffer;
             for(int i=0; i<triangles.size(); i++){
-                createZBuffer(triangles[i], bounds, zBuffer);
+                createZColoredZBuffer(triangles[i], bounds, zBuffer);
             }
             sort(zBuffer.begin(), zBuffer.end(), sortZBuffer);
             drawZBuffer(zBuffer, bounds, image);
@@ -171,9 +171,13 @@ int main(int argc, char **argv)
         //Task 6: Normal Coloring
         case 6:
         {
+            //normal colors are already set by default
+            vector<Vertex> zBuffer;
             for(int i=0; i<triangles.size(); i++){
-                drawPerVertexTriangle(triangles[i], image);
+                createZBuffer(triangles[i], bounds, zBuffer);
             }
+            sort(zBuffer.begin(), zBuffer.end(), sortZBuffer);
+            drawZBuffer(zBuffer, bounds, image);
         }
             break;
         default:
