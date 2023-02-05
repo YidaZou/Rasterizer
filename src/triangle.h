@@ -14,6 +14,7 @@
 
 using std::vector;
 
+//used as vertex and also for pixel coordinates of image
 struct Vertex {
     float x, y, z;
     int r,g,b;
@@ -38,6 +39,7 @@ bool isInside(Vertex& v1, Vertex& v2, Vertex& v3, Vertex& v){
    return (abs(area - (area1 + area2 + area3)) < 0.01);  //is inside if areas add up
 }
 
+//interpolate weight
 vector<unsigned char> colorWeight(Vertex& v1, Vertex& v2, Vertex& v3, Vertex& v){
     //weights of the 3 triangle vertexes
     float w1 = 1/(sqrt(pow(v1.x-v.x,2) + pow(v1.y-v.y,2)));
@@ -52,6 +54,18 @@ vector<unsigned char> colorWeight(Vertex& v1, Vertex& v2, Vertex& v3, Vertex& v)
     return {r,g,b};
 }
 
+unsigned char zWeight(Vertex& v1, Vertex& v2, Vertex& v3, Vertex& v){
+    //weights of the 3 triangle vertexes
+    float w1 = 1/(sqrt(pow(v1.x-v.x,2) + pow(v1.y-v.y,2)));
+    float w2 = 1/(sqrt(pow(v2.x-v.x,2) + pow(v2.y-v.y,2)));
+    float w3 = 1/(sqrt(pow(v3.x-v.x,2) + pow(v3.y-v.y,2)));
+    
+    //z value
+    unsigned char z = (w1*v1.z + w2*v2.z + w3*v3.z)/(w1+w2+w3);
+    
+    return z;
+}
+
 vector<Vertex> toVertices(vector<float>& posBuf){
     vector<Vertex> vertices;
     for(int i=0; i<posBuf.size()-2; i+=3){
@@ -62,6 +76,16 @@ vector<Vertex> toVertices(vector<float>& posBuf){
         vertices.push_back(v);
     }
     return vertices;
+}
+
+void normals(vector<Vertex>& v, vector<float>& n){
+    int x=0;
+    for(int i=0; i<n.size()-2; i+=3){
+        v[x].r = 255 * (0.5 * n[i] + 0.5);      //x->r
+        v[x].g = 255 * (0.5 * n[i+1] + 0.5);    //y->g
+        v[x].b = 255 * (0.5 * n[i+2] + 0.5);    //z->b
+        x++;
+    }
 }
 
 vector<Triangle> toTriangles(vector<Vertex>& vertices){

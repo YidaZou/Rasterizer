@@ -66,6 +66,7 @@ void drawPerVertexTriangle(Triangle& t, std::shared_ptr<Image>& image){
     }
 }
 
+//draw vertical color triangles
 void drawVerticalColor(Triangle& t, vector<float>& bounds, std::shared_ptr<Image>& image){
     //bounds of triangle
     int xMin = std::min({t.a.x,t.b.x,t.c.x});
@@ -79,13 +80,47 @@ void drawVerticalColor(Triangle& t, vector<float>& bounds, std::shared_ptr<Image
         for(int x = xMin; x <= xMax; ++x) {
             v.x = x; v.y = y;
             if(isInside(t.a, t.b, t.c, v)){
-                float yRelative = y - bounds[2];
-                float objHeight = bounds[3]-bounds[2];
-                float colorRatio = (objHeight - yRelative)/ objHeight;
+                float yRelative = y - bounds[2];        //y-yMin
+                float objHeight = bounds[3] - bounds[2];  //yMax-yMin
+                float colorRatio = (objHeight - yRelative) / objHeight;
                 image->setPixel(x, y, 255*(1-colorRatio), 0, 255*colorRatio);
             }
         }
     }
+}
+
+//create points to add to zBuffer
+void createZBuffer(Triangle& t, vector<float>& bounds, vector<Vertex>& zBuffer){
+    //bounds of triangle
+    int xMin = std::min({t.a.x,t.b.x,t.c.x});
+    int xMax = std::max({t.a.x,t.b.x,t.c.x});
+    int yMin = std::min({t.a.y,t.b.y,t.c.y});
+    int yMax = std::max({t.a.y,t.b.y,t.c.y});
+    
+    //drawing
+    Vertex v;
+    for(int y = yMin; y <= yMax; ++y) {
+        for(int x = xMin; x <= xMax; ++x) {
+            v.x = x; v.y = y;
+            if(isInside(t.a, t.b, t.c, v)){
+                //z still uses unscaled and untransformed values
+                v.r = colorWeight(t.a, t.b, t.c, v)[0]; //red value
+                v.g = 0; v.b = 0;
+                zBuffer.push_back(v);
+            }
+        }
+    }
+}
+
+//sort z buffer from farthest to closest
+bool sortZBuffer(const Vertex& a, const Vertex& b){
+    return a.z < b.z;
+}
+
+//draw from sorted zBuffer
+void drawZBuffer(vector<Vertex>& zBuffer, std::shared_ptr<Image>& image){
+    for(auto p : zBuffer)
+        image->setPixel(p.x, p.y, p.r, 0, 0);
 }
 
 #endif /* drawing_h */

@@ -87,15 +87,18 @@ int main(int argc, char **argv)
     
     //organize posBuf
     vector<Vertex> vertices = toVertices(posBuf);
+    
+    //turn normals into rgb values for each vertex
+    normals(vertices,norBuf);
+    
+    //organize vectors into triangles
     vector<Triangle> triangles = toTriangles(vertices);
     
     //calculate bounds of whole object
-    vector<float> bounds = findBounds(vertices);    //{xMin,xMax,yMin,yMax}
+    vector<float> bounds = findBounds(vertices);    //{xMin,xMax,yMin,yMax,zMin,zMax}
     
     //scale and translate
-    cout << bounds[0] << endl;
     scaleTranslate(width, height, bounds, triangles);
-    cout << bounds[0] << endl;
     
     switch (taskNum) {
         //Task 1: Drawing Bounding Boxes
@@ -153,7 +156,47 @@ int main(int argc, char **argv)
             }
         }
             break;
-        
+        //Task 5: Z-Buffering
+        case 5:
+        {
+            vector<Vertex> zBuffer;
+            for(int i=0; i<triangles.size(); i++){
+                //assign colors to vertices of triangle
+                //a
+                float zRelative = triangles[i].a.z - bounds[4]; //z-zMin
+                float zHeight = bounds[5] - bounds[4];  //zMax-zMin
+                float zRatio = zRelative / zHeight;
+                triangles[i].a.r = zRatio*255;   //r
+                triangles[i].a.g = 0;   //g
+                triangles[i].a.b = 0;   //b
+                //b
+                zRelative = triangles[i].b.z - bounds[4]; //z-zMin
+                zHeight = bounds[5] - bounds[4];  //zMax-zMin
+                zRatio = zRelative / zHeight;
+                triangles[i].b.r = zRatio*255;   //r
+                triangles[i].b.g = 0;   //g
+                triangles[i].b.b = 0;   //b
+                //c
+                zRelative = triangles[i].c.z - bounds[4]; //z-zMin
+                zHeight = bounds[5] - bounds[4];  //zMax-zMin
+                zRatio = zRelative / zHeight;
+                triangles[i].c.r = zRatio*255;   //r
+                triangles[i].c.g = 0;   //g
+                triangles[i].c.b = 0;   //b
+                createZBuffer(triangles[i], bounds, zBuffer);
+            }
+            sort(zBuffer.begin(), zBuffer.end(), sortZBuffer);
+            drawZBuffer(zBuffer, image);
+        }
+            break;
+        //Task 6: Normal Coloring
+        case 6:
+        {
+            for(int i=0; i<triangles.size(); i++){
+                drawPerVertexTriangle(triangles[i], image);
+            }
+        }
+            break;
         default:
         {
             cout << "Task Not Found" << endl;

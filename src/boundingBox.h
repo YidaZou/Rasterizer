@@ -16,6 +16,8 @@ vector<float> findBounds(vector<Vertex>& vertices){
     float xMax = vertices[0].x;
     float yMin = vertices[0].y;
     float yMax = vertices[0].y;
+    float zMin = vertices[0].z;
+    float zMax = vertices[0].z;
     for(auto v : vertices){
         if(v.x < xMin){
             xMin = v.x;
@@ -29,8 +31,14 @@ vector<float> findBounds(vector<Vertex>& vertices){
         if(v.y > yMax){
             yMax = v.y;
         }
+        if(v.z < yMin){
+            zMin = v.z;
+        }
+        if(v.z > yMax){
+            zMax = v.z;
+        }
     }
-    return {xMin,xMax,yMin,yMax};
+    return {xMin,xMax,yMin,yMax,zMin,zMax};
 }
 
 
