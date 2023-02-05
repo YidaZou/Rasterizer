@@ -31,10 +31,10 @@ vector<float> findBounds(vector<Vertex>& vertices){
         if(v.y > yMax){
             yMax = v.y;
         }
-        if(v.z < yMin){
+        if(v.z < zMin){
             zMin = v.z;
         }
-        if(v.z > yMax){
+        if(v.z > zMax){
             zMax = v.z;
         }
     }

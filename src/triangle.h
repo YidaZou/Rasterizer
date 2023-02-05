@@ -57,15 +57,17 @@ vector<unsigned char> colorWeight(Vertex& v1, Vertex& v2, Vertex& v3, Vertex& v)
     return {r,g,b};
 }
 
-unsigned char zWeight(Vertex& v1, Vertex& v2, Vertex& v3, Vertex& v){
+float zWeight(Vertex& v1, Vertex& v2, Vertex& v3, Vertex& v){
     //weights of the 3 triangle vertexes
-    float w1 = 1/(sqrt(pow(v1.x-v.x,2) + pow(v1.y-v.y,2)));
-    float w2 = 1/(sqrt(pow(v2.x-v.x,2) + pow(v2.y-v.y,2)));
-    float w3 = 1/(sqrt(pow(v3.x-v.x,2) + pow(v3.y-v.y,2)));
+    float w1 = ((v2.y-v3.y)*(v.x-v3.x)+(v3.x-v2.x)*(v.y-v3.y))/
+                ((v2.y-v3.y)*(v1.x-v3.x)+(v3.x-v2.x)*(v1.y-v3.y));
+    float w2 = ((v3.y-v1.y)*(v.x-v3.x)+(v1.x-v3.x)*(v.y-v3.y))/
+                ((v2.y-v3.y)*(v1.x-v3.x)+(v3.x-v2.x)*(v1.y-v3.y));
+    float w3 = 1-w1-w2;
     
     //z value
-    unsigned char z = (w1*v1.z + w2*v2.z + w3*v3.z)/(w1+w2+w3);
-    
+    float z = (w1*v1.z + w2*v2.z + w3*v3.z)/(w1+w2+w3);
+    //std::cout<< "z: " << z << std::endl;
     return z;
 }
 

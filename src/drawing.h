@@ -118,12 +118,14 @@ bool sortZBuffer(const Vertex& a, const Vertex& b){
 
 //draw from sorted zBuffer
 void drawZBuffer(vector<Vertex>& zBuffer, vector<float>& bounds, std::shared_ptr<Image>& image){
+    float zHeight = bounds[5] - bounds[4];  //zMax-zMin
     for(auto p : zBuffer){
         float zRelative = p.z - bounds[4]; //z-zMin
-        float zHeight = bounds[5] - bounds[4];  //zMax-zMin
         float zRatio = zRelative / zHeight;
         image->setPixel(p.x, p.y, 255*zRatio, 0, 0);
     }
+    //std::cout<<"zMAX: "<< bounds[5] <<" zMIN: " << bounds[4] << std::endl;
+    
 }
 
 #endif /* drawing_h */
