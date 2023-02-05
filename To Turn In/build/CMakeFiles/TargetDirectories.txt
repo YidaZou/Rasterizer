@@ -1,0 +1,3 @@
+/Users/young/CSCE441/A1/To Turn In/build/CMakeFiles/A1.dir
+/Users/young/CSCE441/A1/To Turn In/build/CMakeFiles/edit_cache.dir
+/Users/young/CSCE441/A1/To Turn In/build/CMakeFiles/rebuild_cache.dir
