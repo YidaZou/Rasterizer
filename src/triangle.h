@@ -18,6 +18,7 @@ using std::vector;
 struct Vertex {
     float x, y, z;
     int r,g,b;
+    float n1,n2,n3; //normals
 };
 
 struct Triangle{
@@ -42,9 +43,11 @@ bool isInside(Vertex& v1, Vertex& v2, Vertex& v3, Vertex& v){
 //interpolate weight
 vector<unsigned char> colorWeight(Vertex& v1, Vertex& v2, Vertex& v3, Vertex& v){
     //weights of the 3 triangle vertexes
-    float w1 = 1/(sqrt(pow(v1.x-v.x,2) + pow(v1.y-v.y,2)));
-    float w2 = 1/(sqrt(pow(v2.x-v.x,2) + pow(v2.y-v.y,2)));
-    float w3 = 1/(sqrt(pow(v3.x-v.x,2) + pow(v3.y-v.y,2)));
+    float w1 = ((v2.y-v3.y)*(v.x-v3.x)+(v3.x-v2.x)*(v.y-v3.y))/
+                ((v2.y-v3.y)*(v1.x-v3.x)+(v3.x-v2.x)*(v1.y-v3.y));
+    float w2 = ((v3.y-v1.y)*(v.x-v3.x)+(v1.x-v3.x)*(v.y-v3.y))/
+                ((v2.y-v3.y)*(v1.x-v3.x)+(v3.x-v2.x)*(v1.y-v3.y));
+    float w3 = 1-w1-w2;
     
     //colored weights of vertex
     unsigned char r = (w1*v1.r + w2*v2.r + w3*v3.r)/(w1+w2+w3);
@@ -79,6 +82,16 @@ vector<Vertex> toVertices(vector<float>& posBuf){
 }
 
 void normals(vector<Vertex>& v, vector<float>& n){
+    int x=0;
+    for(int i=0; i<n.size()-2; i+=3){
+        v[x].n1 = 255 * (0.5 * n[i] + 0.5);      //x->r
+        v[x].n2 = 255 * (0.5 * n[i+1] + 0.5);    //y->g
+        v[x].n3 = 255 * (0.5 * n[i+2] + 0.5);    //z->b
+        x++;
+    }
+}
+
+void normalsColor(vector<Vertex>& v, vector<float>& n){
     int x=0;
     for(int i=0; i<n.size()-2; i+=3){
         v[x].r = 255 * (0.5 * n[i] + 0.5);      //x->r

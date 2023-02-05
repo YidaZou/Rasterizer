@@ -88,8 +88,9 @@ int main(int argc, char **argv)
     //organize posBuf
     vector<Vertex> vertices = toVertices(posBuf);
     
-    //turn normals into rgb values for each vertex
+    //add normals to vertices and set normal rgb values for each vertex
     normals(vertices,norBuf);
+    normalsColor(vertices,norBuf);
     
     //organize vectors into triangles
     vector<Triangle> triangles = toTriangles(vertices);
@@ -161,32 +162,10 @@ int main(int argc, char **argv)
         {
             vector<Vertex> zBuffer;
             for(int i=0; i<triangles.size(); i++){
-                //assign colors to vertices of triangle
-                //a
-                float zRelative = triangles[i].a.z - bounds[4]; //z-zMin
-                float zHeight = bounds[5] - bounds[4];  //zMax-zMin
-                float zRatio = zRelative / zHeight;
-                triangles[i].a.r = zRatio*255;   //r
-                triangles[i].a.g = 0;   //g
-                triangles[i].a.b = 0;   //b
-                //b
-                zRelative = triangles[i].b.z - bounds[4]; //z-zMin
-                zHeight = bounds[5] - bounds[4];  //zMax-zMin
-                zRatio = zRelative / zHeight;
-                triangles[i].b.r = zRatio*255;   //r
-                triangles[i].b.g = 0;   //g
-                triangles[i].b.b = 0;   //b
-                //c
-                zRelative = triangles[i].c.z - bounds[4]; //z-zMin
-                zHeight = bounds[5] - bounds[4];  //zMax-zMin
-                zRatio = zRelative / zHeight;
-                triangles[i].c.r = zRatio*255;   //r
-                triangles[i].c.g = 0;   //g
-                triangles[i].c.b = 0;   //b
                 createZBuffer(triangles[i], bounds, zBuffer);
             }
             sort(zBuffer.begin(), zBuffer.end(), sortZBuffer);
-            drawZBuffer(zBuffer, image);
+            drawZBuffer(zBuffer, bounds, image);
         }
             break;
         //Task 6: Normal Coloring
