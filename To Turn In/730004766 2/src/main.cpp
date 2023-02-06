@@ -130,24 +130,20 @@ int main(int argc, char **argv)
         //Task 3: interpolating Per-Vertex Colors
         case 3:
         {
-            int x=0;
             for(int i=0; i<triangles.size(); i++){
                 //assign colors to vertices of triangle
                 //a
-                triangles[i].a.r = RANDOM_COLORS[x%7][0]*255;   //r
-                triangles[i].a.g = RANDOM_COLORS[x%7][1]*255;   //g
-                triangles[i].a.b = RANDOM_COLORS[x%7][2]*255;   //b
-                x++;
+                triangles[i].a.r = RANDOM_COLORS[i%7][0]*255;   //r
+                triangles[i].a.g = RANDOM_COLORS[i%7][1]*255;   //g
+                triangles[i].a.b = RANDOM_COLORS[i%7][2]*255;   //b
                 //b
-                triangles[i].b.r = RANDOM_COLORS[x%7][0]*255;   //r
-                triangles[i].b.g = RANDOM_COLORS[x%7][1]*255;   //g
-                triangles[i].b.b = RANDOM_COLORS[x%7][2]*255;   //b
-                x++;
+                triangles[i].b.r = RANDOM_COLORS[(i+1)%7][0]*255;   //r
+                triangles[i].b.g = RANDOM_COLORS[(i+1)%7][1]*255;   //g
+                triangles[i].b.b = RANDOM_COLORS[(i+1)%7][2]*255;   //b
                 //c
-                triangles[i].c.r = RANDOM_COLORS[x%7][0]*255;   //r
-                triangles[i].c.g = RANDOM_COLORS[x%7][1]*255;   //g
-                triangles[i].c.b = RANDOM_COLORS[x%7][2]*255;   //b
-                x++;
+                triangles[i].c.r = RANDOM_COLORS[(i+2)%7][0]*255;   //r
+                triangles[i].c.g = RANDOM_COLORS[(i+2)%7][1]*255;   //g
+                triangles[i].c.b = RANDOM_COLORS[(i+2)%7][2]*255;   //b
                 
                 drawPerVertexTriangle(triangles[i], image);
             }
